@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EFCore_AddMigrations.Migrations
+namespace EFCoreAddMigrations.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230131152416_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230131174106_AddedClientModelRelatedToProject")]
+    partial class AddedClientModelRelatedToProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,39 @@ namespace EFCore_AddMigrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EFCore_AddMigrations.Entities.Client", b =>
+                {
+                    b.Property<int>("ClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClientId");
+
+                    b.ToTable("Client", (string)null);
+                });
 
             modelBuilder.Entity("EFCore_AddMigrations.Entities.Employee", b =>
                 {
@@ -127,15 +160,23 @@ namespace EFCore_AddMigrations.Migrations
                     b.Property<decimal>("Budget")
                         .HasColumnType("money");
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ProgrammingLanguage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("StartedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ProjectId");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Project", (string)null);
                 });
@@ -194,6 +235,22 @@ namespace EFCore_AddMigrations.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("EFCore_AddMigrations.Entities.Project", b =>
+                {
+                    b.HasOne("EFCore_AddMigrations.Entities.Client", "Client")
+                        .WithMany("Projects")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("EFCore_AddMigrations.Entities.Client", b =>
+                {
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("EFCore_AddMigrations.Entities.Employee", b =>

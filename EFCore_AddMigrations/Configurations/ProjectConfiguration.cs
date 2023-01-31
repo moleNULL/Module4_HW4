@@ -23,7 +23,7 @@ namespace EFCore_AddMigrations.Configurations
 
             // FOREIGN KEYS and relationships
 
-            // many to many
+            // many to many (EmployeeProject)
             builder.HasMany(p => p.Employees)
                 .WithMany(e => e.Projects)
                 .UsingEntity<EmployeeProject>(
@@ -37,6 +37,12 @@ namespace EFCore_AddMigrations.Configurations
                     .WithMany(p => p.EmployeeProjects)
                     .HasForeignKey(ep => ep.ProjectId)
                     .OnDelete(DeleteBehavior.Cascade));
+
+            // one to many
+            builder.HasOne(p => p.Client)
+                .WithMany(c => c.Projects)
+                .HasForeignKey(p => p.ClientId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
