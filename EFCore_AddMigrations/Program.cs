@@ -1,4 +1,4 @@
-﻿namespace EFCore_CodeFirst
+﻿namespace EFCore_AddMigrations
 {
     public class Program
     {

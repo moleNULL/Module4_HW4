@@ -1,15 +1,14 @@
-﻿using EFCore_CodeFirst.Configurations;
-using EFCore_CodeFirst.Entities;
+﻿using EFCore_AddMigrations.Configurations;
+using EFCore_AddMigrations.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCore_CodeFirst
+namespace EFCore_AddMigrations
 {
     public class ApplicationContext : DbContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<Employee> Employees { get; set; } = null!;

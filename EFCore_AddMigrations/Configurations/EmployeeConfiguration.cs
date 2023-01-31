@@ -1,8 +1,8 @@
-﻿using EFCore_CodeFirst.Entities;
+﻿using EFCore_AddMigrations.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCore_CodeFirst.Configurations
+namespace EFCore_AddMigrations.Configurations
 {
     public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {

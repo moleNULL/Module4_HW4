@@ -1,4 +1,4 @@
-﻿namespace EFCore_CodeFirst.Entities
+﻿namespace EFCore_AddMigrations.Entities
 {
     public class Project
     {

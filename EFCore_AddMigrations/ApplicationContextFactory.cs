@@ -1,22 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
-namespace EFCore_AddMigrations
+namespace EFCore_AddMigrations.Entities
 {
-    internal class Starter
+    public class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
     {
-        public static void Run()
-        {
-            var options = CreateDbOptions();
-
-            using (var db = new ApplicationContext(options))
-            {
-                // ...
-            }
-        }
-
-        // Generate options that will be used in every DbContext
-        private static DbContextOptions<ApplicationContext> CreateDbOptions()
+        // Create context configuration for EF Core during Migrations
+        public ApplicationContext CreateDbContext(string[] args)
         {
             string jsonSettingsFile = "appsettings.json";
 
@@ -35,7 +26,7 @@ namespace EFCore_AddMigrations
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
             var options = optionsBuilder.UseSqlServer(connectionString).Options;
 
-            return options;
+            return new ApplicationContext(options);
         }
     }
 }
