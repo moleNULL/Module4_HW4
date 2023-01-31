@@ -1,10 +1,13 @@
-﻿namespace EFCore_AddMigrations
+﻿namespace EFCore_CodeFirst
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine(" ");
+            Starter.Run();
+
+            Console.Write("\nPress any key to continue . . .");
+            Console.ReadLine();
         }
     }
 }
